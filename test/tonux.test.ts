@@ -38,3 +38,11 @@ test('deploy wallet', async () => {
 
     expect(await tonux.getAccountType(await wallet.getAddress())).toEqual(AccountType.ACTIVE)
 })
+
+test('keypair from secret', async () => {
+    const keypair = await tonux.generateKeypair();
+    const keypair2 = await tonux.keyPairFromSecret(keypair.secret);
+
+    expect(keypair2.secret).toEqual(keypair.secret)
+    expect(keypair2.public).toEqual(keypair.public)
+})
