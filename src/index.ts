@@ -3,7 +3,6 @@ import {Account} from "@tonclient/appkit";
 import {WalletContract} from "../contracts/wallet/WalletContract.js"
 
 export enum AccountType {
-    NOT_FOUND = -1,
     UN_INIT = 0,
     ACTIVE = 1,
     FROZEN = 2,
@@ -44,11 +43,11 @@ export class Tonux {
                     eq: address
                 }
             },
-            result: 'acc_type, last_trans_lt'
+            result: 'acc_type'
         })
-        const result: any[] = queryCollectionResult.result
+        const result: any[] = queryCollectionResult.result;
         if (!result.length)
-            return AccountType.NOT_FOUND
+            return AccountType.NON_EXIST
 
         return result[0]['acc_type']
     }
