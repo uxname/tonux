@@ -1,7 +1,7 @@
-import {KeyPair, ResultOfQueryCollection, signerKeys, TonClient} from "@tonclient/core";
-import {Account} from "@tonclient/appkit";
-import {WalletContract} from "../contracts/wallet/WalletContract.js"
-import BigNumber from "bignumber.js";
+import {KeyPair, ResultOfQueryCollection, signerKeys, TonClient} from '@tonclient/core';
+import {Account} from '@tonclient/appkit';
+import {WalletContract} from '../contracts/wallet/WalletContract.js';
+import BigNumber from 'bignumber.js';
 
 export enum AccountType {
     UN_INIT = 0,
@@ -45,12 +45,13 @@ export class Tonux {
                 }
             },
             result: 'acc_type'
-        })
+        });
         const result: any[] = queryCollectionResult.result;
-        if (!result.length)
-            return AccountType.NON_EXIST
+        if (!result.length) {
+            return AccountType.NON_EXIST;
+        }
 
-        return result[0]['acc_type']
+        return result[0].acc_type;
     }
 
     async getBalance(address: string): Promise<BigNumber> {
@@ -62,9 +63,12 @@ export class Tonux {
                   }
                 }`,
             variables: {address}
-        })
+        });
         if (res.result.data.accounts[0]?.balance) {
-            return new BigNumber(res.result.data.accounts[0]?.balance)
-        } else return null
+            return new BigNumber(res.result.data.accounts[0]?.balance);
+        } else {
+            return null;
+        }
     }
 }
+
