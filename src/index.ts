@@ -1,6 +1,7 @@
 import {KeyPair, ResultOfQueryCollection, signerKeys, TonClient} from "@tonclient/core";
 import {Account} from "@tonclient/appkit";
 import {WalletContract} from "../contracts/wallet/WalletContract.js"
+import BigNumber from "bignumber.js";
 
 export enum AccountType {
     UN_INIT = 0,
@@ -50,5 +51,20 @@ export class Tonux {
             return AccountType.NON_EXIST
 
         return result[0]['acc_type']
+    }
+
+    async getBalance(address: string): Promise<BigNumber> {
+        const res = await this.client.net.query({
+            query: `query GetBalance($address: String!) {
+                  accounts(filter: { id: { eq: $address } }) {
+                    id
+                    balance
+                  }
+                }`,
+            variables: {address}
+        })
+        if (res.result.data.accounts[0]?.balance) {
+            return new BigNumber(res.result.data.accounts[0]?.balance)
+        } else return null
     }
 }

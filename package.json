@@ -20,6 +20,7 @@
   "dependencies": {
     "@tonclient/appkit": "^0.2.0",
     "@tonclient/core": "^1.20.1",
-    "@tonclient/lib-node": "^1.20.1"
+    "@tonclient/lib-node": "^1.20.1",
+    "bignumber.js": "^9.0.1"
   }
 }

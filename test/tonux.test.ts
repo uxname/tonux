@@ -46,3 +46,14 @@ test('keypair from secret', async () => {
     expect(keypair2.secret).toEqual(keypair.secret)
     expect(keypair2.public).toEqual(keypair.public)
 })
+
+test('get balance', async () => {
+    const keypair = await tonux.generateKeypair();
+    const wallet = tonux.walletFromKeyPair(keypair);
+
+    await wallet.deploy({useGiver: true})
+
+    const balance = await tonux.getBalance(await wallet.getAddress())
+
+    expect(balance.toNumber()).toBeGreaterThan(1)
+})
