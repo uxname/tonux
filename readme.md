@@ -6,11 +6,15 @@ Free TON SDK library
 
 ## yarn
 
-`yarn add tonux`
+```
+yarn add tonux
+```
 
 ## npm
 
-`npm i tonux`
+```
+npm i tonux
+```
 
 # Run tests
 
