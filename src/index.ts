@@ -1,4 +1,11 @@
-import {KeyPair, ResultOfProcessMessage, ResultOfQueryCollection, signerKeys, TonClient} from '@tonclient/core';
+import {
+    KeyPair,
+    ResultOfProcessMessage,
+    ResultOfQueryCollection,
+    signerKeys,
+    TonClient,
+    TransactionNode
+} from '@tonclient/core';
 import {Account} from '@tonclient/appkit';
 import {WalletContract} from '../contracts/wallet/WalletContract.js';
 import BigNumber from 'bignumber.js';
@@ -11,6 +18,10 @@ export enum AccountType {
     FROZEN = 2,
     // eslint-disable-next-line no-magic-numbers
     NON_EXIST = 3
+}
+
+type TransactionItem = TransactionNode & {
+    timestamp: number
 }
 
 export class Tonux {
@@ -93,6 +104,34 @@ export class Tonux {
             flags: 1,
             payload: ''
         });
+    }
+
+    async getTransactions(address: string): Promise<TransactionItem[]> {
+        const res = await this.client.net.query({
+            query: `query AccountTransactions($address: String!) {
+                      transactions(filter: { account_addr: { eq: $address } }) {
+                        id
+                        in_msg
+                        out_msgs
+                        account_addr
+                        total_fees
+                        aborted
+                        balance_delta
+                        tr_type
+                        tr_type_name
+                        account_addr
+                        block {
+                          id
+                          gen_utime
+                        }
+                      }
+                    }`,
+            variables: {address}
+        });
+        return res.result.data.transactions.map(tx => ({
+            ...tx,
+            timestamp: tx.block.gen_utime
+        }));
     }
 }
 
