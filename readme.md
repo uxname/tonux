@@ -1,4 +1,4 @@
-# Tonux
+![](./.media/logo.svg)
 
 Free TON SDK library
 
