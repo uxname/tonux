@@ -83,3 +83,19 @@ test('send coin', async () => {
 
     expect(TEST_AMOUNT - difference).toBeLessThanOrEqual(ALLOWED_ERROR);
 });
+
+test('send coin excess of balance', async () => {
+    const keypair = await tonux.generateKeypair();
+    const wallet = tonux.walletFromKeyPair(keypair);
+
+    await wallet.deploy({useGiver: true});
+
+    const balanceSender = await tonux.getBalance(await wallet.getAddress());
+
+    expect(balanceSender.toNumber()).toBeGreaterThan(1);
+
+    const FAKE_RECEIVER_ADDRESS = '0:5ec3dbe83885261983b4c459b266e1e1333a0c62fff7e52f9e7492b5377fdf32';
+    const TEST_AMOUNT = 99999999;
+
+    await expect(tonux.sendCoin(wallet, FAKE_RECEIVER_ADDRESS, tonux.tokenToNanoToken(new BigNumber(TEST_AMOUNT)))).rejects.not.toBeNull();
+});
