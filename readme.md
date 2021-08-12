@@ -6,13 +6,13 @@ Free TON SDK library
 
 ## yarn
 
-```
+```shell
 yarn add tonux
 ```
 
 ## npm
 
-```
+```shell
 npm i tonux
 ```
 
