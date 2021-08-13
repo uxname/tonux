@@ -118,5 +118,4 @@ test('transaction history', async () => {
     const history = await tonux.getTransactions(FAKE_RECEIVER_ADDRESS);
     expect(history).not.toBeNull();
     expect(history.length).toBeGreaterThanOrEqual(1);
-    console.log({history});
 });
