@@ -9,6 +9,7 @@ import {
 import {Account} from '@tonclient/appkit';
 import {WalletContract} from '../contracts/wallet/WalletContract.js';
 import BigNumber from 'bignumber.js';
+import {BinaryLibrary} from '@tonclient/lib-node';
 
 // eslint-disable-next-line no-shadow
 export enum AccountType {
@@ -27,7 +28,8 @@ type TransactionItem = TransactionNode & {
 export class Tonux {
     client: TonClient;
 
-    constructor(endpoints: string[]) {
+    constructor(endpoints: string[], binaryLibrary: () => Promise<BinaryLibrary>) {
+        TonClient.useBinaryLibrary(binaryLibrary);
         this.client = new TonClient({network: {endpoints}});
     }
 

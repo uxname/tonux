@@ -1,13 +1,11 @@
 import {AccountType, Tonux} from '../src';
 import {libNode} from '@tonclient/lib-node';
-import {TonClient} from '@tonclient/core';
 import BigNumber from 'bignumber.js';
 
 let tonux: Tonux;
 
 beforeAll(() => {
-    TonClient.useBinaryLibrary(libNode);
-    tonux = new Tonux(['http://localhost']);
+    tonux = new Tonux(['http://localhost'], libNode);
 });
 
 afterAll(() => {
