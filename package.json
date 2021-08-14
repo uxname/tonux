@@ -4,9 +4,10 @@
     "description": "Free TON client",
     "main": "build/src/index.js",
     "module": "build/src/index.js",
+    "type": "module",
     "types": "build/src/index.d.ts",
     "scripts": {
-        "build": "tsc",
+        "build": "rm -rf build && tsc",
         "test": "npx jest",
         "lint": "./node_modules/.bin/eslint . --fix"
     },
