@@ -1,6 +1,7 @@
 import {AccountType, Tonux} from '../src';
 import {libNode} from '@tonclient/lib-node';
 import BigNumber from 'bignumber.js';
+import {WalletContract} from '../contracts/wallet/WalletContract';
 
 let tonux: Tonux;
 
@@ -116,4 +117,41 @@ test('transaction history', async () => {
     const history = await tonux.getTransactions(FAKE_RECEIVER_ADDRESS);
     expect(history).not.toBeNull();
     expect(history.length).toBeGreaterThanOrEqual(1);
+});
+
+test('contract call', async () => {
+    const keypair = await tonux.generateKeypair();
+    const wallet = tonux.walletFromKeyPair(keypair);
+
+    await wallet.deploy({useGiver: true});
+
+    const balanceSender = await tonux.getBalance(await wallet.getAddress());
+
+    expect(balanceSender.toNumber()).toBeGreaterThan(1);
+
+    const FAKE_RECEIVER_ADDRESS = '0:5ec3dbe83885261983b4c459b266e1e1333a0c62fff7e52f9e7492b5377fdf31';
+    const TEST_AMOUNT = 0.111;
+
+    const balanceReceiverBeforeSend = await tonux.getBalance(FAKE_RECEIVER_ADDRESS);
+
+    await tonux.contractCall({
+        keyPair: keypair,
+        contractAddress: await wallet.getAddress(),
+        abi: WalletContract.abi,
+        methodName: 'sendTransaction',
+        params: {
+            dest: FAKE_RECEIVER_ADDRESS,
+            value: tonux.tokenToNanoToken(new BigNumber(TEST_AMOUNT)).toString(),
+            bounce: false,
+            flags: 1,
+            payload: ''
+        }
+    });
+
+    const balanceReceiverAfterSend = await tonux.getBalance(FAKE_RECEIVER_ADDRESS);
+
+    const ALLOWED_ERROR = 0.00001;
+    const difference = tonux.nanoTokenToToken(balanceReceiverAfterSend.minus(balanceReceiverBeforeSend)).toNumber();
+
+    expect(TEST_AMOUNT - difference).toBeLessThanOrEqual(ALLOWED_ERROR);
 });

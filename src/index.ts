@@ -1,4 +1,5 @@
 import {
+    abiContract,
     KeyPair,
     ResultOfProcessMessage,
     ResultOfQueryCollection,
@@ -7,9 +8,10 @@ import {
     TransactionNode
 } from '@tonclient/core';
 import {Account} from '@tonclient/appkit';
-import {WalletContract} from '../contracts/wallet/WalletContract.js';
+import {WalletContract} from '../contracts/wallet/WalletContract';
 import BigNumber from 'bignumber.js';
 import {BinaryLibrary} from '@tonclient/lib-node';
+import {ParamsOfProcessMessage} from '@tonclient/core/dist/modules';
 
 // eslint-disable-next-line no-shadow
 export enum AccountType {
@@ -135,5 +137,27 @@ export class Tonux {
             timestamp: tx.block.gen_utime
         }));
     }
+
+    async contractCall(data: { keyPair: KeyPair, contractAddress: string, abi: unknown, methodName: string, params?: unknown }): Promise<ResultOfProcessMessage> {
+        const _params: ParamsOfProcessMessage = {
+            send_events: false,
+            message_encode_params: {
+                address: data.contractAddress,
+                abi: abiContract(data.abi),
+                call_set: {
+                    function_name: data.methodName,
+                    input: data.params
+                },
+                signer: {
+                    type: 'Keys',
+                    keys: data.keyPair
+                }
+            }
+        };
+        const response = await this.client.processing.process_message(_params);
+        console.log(`Сontract run transaction with output ${response.decoded.output}, ${response.transaction.id}`);
+        return response;
+    }
+
 }
 
