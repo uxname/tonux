@@ -1,6 +1,6 @@
 {
   "name": "tonux",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Free TON client",
   "main": "build/src/index.js",
   "module": "build/src/index.js",
