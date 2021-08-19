@@ -1,37 +1,40 @@
 {
-    "name": "tonux",
-    "version": "0.0.1",
-    "description": "Free TON client",
-    "main": "build/src/index.js",
-    "module": "build/src/index.js",
-    "types": "build/src/index.d.ts",
-    "scripts": {
-        "build": "rm -rf build && tsc",
-        "test": "npx jest",
-        "lint": "./node_modules/.bin/eslint . --fix"
-    },
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "@jetbrains/eslint-config": "^5.3.1",
-        "@types/jest": "^27.0.1",
-        "@typescript-eslint/eslint-plugin": "^4.29.2",
-        "@typescript-eslint/parser": "^4.29.2",
-        "eslint": "^7.32.0",
-        "eslint-plugin-node": "^11.1.0",
-        "eslint-plugin-security": "^1.4.0",
-        "eslint-plugin-sonarjs": "^0.10.0",
-        "jest": "^27.0.6",
-        "ts-jest": "^27.0.4",
-        "ts-node": "^10.2.0",
-        "ts-node-dev": "^1.1.8",
-        "typescript": "^4.3.5"
-    },
-    "dependencies": {
-        "@tonclient/appkit": "^0.2.0",
-        "@tonclient/core": "^1.20.1",
-        "@tonclient/lib-node": "^1.20.1",
-        "bignumber.js": "^9.0.1",
-        "jest-junit": "^12.2.0"
-    }
+  "name": "tonux",
+  "version": "0.0.1",
+  "description": "Free TON client",
+  "main": "build/src/index.js",
+  "module": "build/src/index.js",
+  "repository": {
+    "url": "https://github.com/uxname/tonux"
+  },
+  "types": "build/src/index.d.ts",
+  "scripts": {
+    "build": "rm -rf build && tsc",
+    "test": "npx jest",
+    "lint": "./node_modules/.bin/eslint . --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@jetbrains/eslint-config": "^5.3.1",
+    "@types/jest": "^27.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@typescript-eslint/parser": "^4.29.2",
+    "eslint": "^7.32.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-sonarjs": "^0.10.0",
+    "jest": "^27.0.6",
+    "ts-jest": "^27.0.4",
+    "ts-node": "^10.2.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@tonclient/appkit": "^0.2.0",
+    "@tonclient/core": "^1.20.1",
+    "@tonclient/lib-node": "^1.20.1",
+    "bignumber.js": "^9.0.1",
+    "jest-junit": "^12.2.0"
+  }
 }
