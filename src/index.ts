@@ -155,7 +155,7 @@ export class Tonux {
             }
         };
         const response = await this.client.processing.process_message(_params);
-        console.log(`Сontract run transaction with output ${response.decoded.output}, ${response.transaction.id}`);
+        console.log(`Contract run transaction with output ${response.decoded.output}, ${response.transaction.id}`);
         return response;
     }
 
